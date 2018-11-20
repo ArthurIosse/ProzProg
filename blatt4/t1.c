@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
+
+  //"My"functions implementation
 //sinus Funktion
 double mysin(double x){
 double c=x;
@@ -44,13 +46,15 @@ for(int k=2; yalt!=y;k++){
 return y;
 }
 
-
+   //main function
 int main (int argc, char * argv[])
 {
+  //scanning a number
 double input;
 printf("Give a number Sir!");
 scanf("%lf",&input);
 
+  //printing the results of "My"functions
 printf("  myFunctions for %lf \n\n",input);
 printf("  sin(%lf) = %lf\n",input,mysin(input));
 if (input >= -1.0 && input <= 1.0)
@@ -62,6 +66,8 @@ if (input > 0 && input <= 2.0){
 }
 printf("\n");
 
+
+  //the comparison the the "<math.h>" functions of the same input
 char y;
 printf("do you want to compare with <math.c> Sir?(y/n)\n");
 scanf(" %c",&y);
