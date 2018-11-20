@@ -50,10 +50,18 @@ return y;
 
 int main (int argc, char * argv[])
 {
+double input;
+printf("Give a number Sir!");
+scanf("%lf",&input);
 
-printf("sin  %f\n",sin(12.0));
-printf("arctan %f\n",arctan(0.3));
-printf("ln %f\n",ln(0.4));
 
+printf("sin(%lf) = %lf\n",input,sin(input));
+if (input > -1.0 && input < 1.0)
+{
+  printf("arctan(%lf) = %lf\n",input,arctan(input));
+}
+if (input > -1.0 && input < 1.0){
+  printf("ln(%lf) = %f\n",input,ln(input));
+}
   return 0;
 }
