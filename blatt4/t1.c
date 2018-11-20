@@ -2,7 +2,7 @@
 #include <math.h>
 
 //sinus Funktion
-double sin(double x){
+double mysin(double x){
 double c=x;
 double y=c;
 double yalt=y+1.0;
@@ -16,7 +16,7 @@ for(int k=1; y!=yalt;k++){
 return y;
 }
 //arctan Funktion
-double arctan(double x){
+double myarctan(double x){
 double c=x;
 double y=c;
 double yalt=y+1.0;
@@ -30,7 +30,7 @@ for(int k=1;y!=yalt;k++){
 return y;
 }
 //ln Funktion
-double ln(double x){
+double myln(double x){
 double c=(x-1);
 double y=c;
 double yalt=y+1.0;
@@ -40,11 +40,8 @@ for(int k=2; yalt!=y;k++){
     yalt=y;
     y=y+c;
     //printf("%f\n",y);     //Zwischenergebnisse
-
 }
-
 return y;
-
 }
 
 
@@ -54,14 +51,32 @@ double input;
 printf("Give a number Sir!");
 scanf("%lf",&input);
 
-
-printf("sin(%lf) = %lf\n",input,sin(input));
-if (input > -1.0 && input < 1.0)
+printf("  myFunctions for %lf \n\n",input);
+printf("  sin(%lf) = %lf\n",input,mysin(input));
+if (input >= -1.0 && input <= 1.0)
 {
-  printf("arctan(%lf) = %lf\n",input,arctan(input));
+  printf("  arctan(%lf) = %lf\n",input,myarctan(input));
 }
-if (input > -1.0 && input < 1.0){
-  printf("ln(%lf) = %f\n",input,ln(input));
+if (input > 0 && input <= 2.0){
+  printf("  ln(%lf) = %f\n",input,myln(input));
 }
+printf("\n");
+
+char y;
+printf("do you want to compare with <math.c> Sir?(y/n)\n");
+scanf(" %c",&y);
+switch (y)
+{
+  case 'y': printf("calculating, please wait...\n   <math.h> Functions for %lf \n\n",input);
+            printf("  sin(%lf) = %lf\n",input, sin(input));
+            printf("  arctan(%lf) = %lf\n",input, atan(input));
+            printf("  ln(%lf) = %lf\n",input, log(input));
+  break;
+  case 'n': printf("Goodbye!"); break;
+  default : printf("Wrong char");
+}
+printf("\n");
+
+
   return 0;
 }
