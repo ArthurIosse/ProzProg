@@ -57,11 +57,11 @@ scanf("%lf",&input);
   //printing the results of "My"functions
 printf("  myFunctions for %lf \n\n",input);
 printf("  sin(%lf) = %lf\n",input,mysin(input));
-if (input >= -1.0 && input <= 1.0)
+if (input > -1.0 && input < 1.0)
 {
   printf("  arctan(%lf) = %lf\n",input,myarctan(input));
 }
-if (input > 0 && input <= 2.0){
+if (input > 0 && input < 2.0){
   printf("  ln(%lf) = %f\n",input,myln(input));
 }
 printf("\n");

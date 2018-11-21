@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-
+// e
 double myexp(double x){
 double c=1;
 double y=c;
@@ -14,7 +14,7 @@ for(int k=1; y!=yalt;k++){
 }
 return y;
 }
-
+//cos
 double mycos(double x){
 double c=1;
 double y=c;
