@@ -125,9 +125,11 @@ int main (int argc, char * argv[])
   int n = x % 10;
 
 
-  wrong = checkline(playfield);
+
   printfield(z,s,n);
   printinstructions();
+
+  wrong = checkline(playfield);
 
 
   }
