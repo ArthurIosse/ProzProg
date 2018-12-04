@@ -27,16 +27,26 @@ int playfield[9][9];
 
 void printfield(int z, int s, int n,int wrong)
 {
-  playfield[z-1][s-1] = n;
+  //playfield[z-1][s-1] = n;
+  COLOR_YELLOW;
+  printf("\n\n\n\n\n\n    1  2  3   4  5  6   7  8  9 \n");
+  COLOR_RESET;
   for(int i = 0 ; i<9 ; i++)
   {
     if ( i == 0 || i == 3 || i == 6)
     {
-      printf("+---------+---------+---------+\n");
+      printf("  +---------+---------+---------+\n");
     }
     for (int j = 0 ; j<9 ; j++)
     {
-      if (j == 0 || j == 3 || j == 6)
+      if (j == 0 )
+      {
+        COLOR_YELLOW;
+        printf("%d ",i+1);
+        COLOR_RESET;
+        printf("|");
+      }
+      else if (j == 3 || j == 6)
       {
         printf("|");
       }
@@ -63,7 +73,7 @@ void printfield(int z, int s, int n,int wrong)
   }
   printf("|\n");
 }
-printf("+---------+---------+---------+\n");
+printf("  +---------+---------+---------+\n");
 }
 
 void printinstructions()
@@ -122,6 +132,7 @@ int main (int argc, char * argv[])
   int s = x % 100 / 10;
   int n = x % 10;
 
+  playfield[z-1][s-1] = n ;
   wrong = checkline(playfield);
   printfield(z,s,n,wrong);
   printinstructions();
