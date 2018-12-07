@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-#define mymac for(int i ; i<101; i++){printf("Hello World\n");}
+#define maxnum(x,y) if(x>y){printf("%d",x);}else{printf("%d",y);}
 
 int main (int argc, char * argv[])
 {
 
 
-mymac
+maxnum(120,14);
 
   return 0;
 }
