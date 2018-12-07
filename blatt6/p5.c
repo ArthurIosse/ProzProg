@@ -3,7 +3,7 @@
 
 int n = 3;
 
-double dotproduct(double a[],double b[] )
+double dotproduct(double a[],double b[])
 {
 double c;
 for (int i = 0 ; i < n ; i++)
@@ -40,7 +40,8 @@ for(int i = 0 ; i<n ; i++)
   myvector2[i] = y;
 }
 
-printf("%lf \n",dotproduct(myvector1,myvector2));
+printf("%lf \n",dotproduct(&myvector1[0],&myvector2[0])); //arrays call by referenz
+printf ("%lf that\n",myvector2);
 
 free(myvector1);
 free(myvector2);
