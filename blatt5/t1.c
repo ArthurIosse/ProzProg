@@ -1,14 +1,9 @@
 #include <stdio.h>
-
-#define COLOR_RESET  printf("\x1B[0m")
-#define COLOR_RED    printf("\x1B[31m")
-#define COLOR_GREEN  printf("\x1B[32m")
-#define COLOR_YELLOW printf("\x1B[33m")
-#define COLOR_CYAN   printf("\x1B[36m")
+#include "t1funk.h"
 
 
 
-const int field[9][9] = {{4,1,0,0,6,5,0,0,7},
+const int field[9][9] = { {4,1,0,0,6,5,0,0,7},
                           {0,0,6,0,0,7,4,8,0},
                           {2,0,7,4,9,0,0,0,6},
 
@@ -25,94 +20,8 @@ int playfield[9][9];
 
 
 
-void printfield(int z, int s, int n,int wrong)
-{
-  //playfield[z-1][s-1] = n;
-  COLOR_YELLOW;
-  printf("\n\n\n\n\n\n    1  2  3   4  5  6   7  8  9 \n");
-  COLOR_RESET;
-  for(int i = 0 ; i<9 ; i++)
-  {
-    if ( i == 0 || i == 3 || i == 6)
-    {
-      printf("  +---------+---------+---------+\n");
-    }
-    for (int j = 0 ; j<9 ; j++)
-    {
-      if (j == 0 )
-      {
-        COLOR_YELLOW;
-        printf("%d ",i+1);
-        COLOR_RESET;
-        printf("|");
-      }
-      else if (j == 3 || j == 6)
-      {
-        printf("|");
-      }
-
-      if(field[i][j] == 0)
-      {
-          if (playfield[i][j] == 0)
-          {
-            printf("   ");
-          }
-          else{
-            if (wrong)
-            {
-              printf(" \x1B[31m%d\x1B[0m ",playfield[i][j]);
-            }else{
-            printf(" \x1B[32m%d\x1B[0m ",playfield[i][j]);
-          }
-          }
-       }else
-       {
-         playfield[i][j] = field[i][j];
-         printf(" %d ",playfield[i][j]);
-       }
-  }
-  printf("|\n");
-}
-printf("  +---------+---------+---------+\n");
-}
-
-void printinstructions()
-{
-  printf("\n\nEnter a 3 digit Number Sir, where XXX\n");
-  printf("                                  ^^^\n");
-  printf("                                  |||->Nummer\n");
-  printf("                                  ||->Spalte\n");
-  printf("                                  |->Zeile\n");
-  printf("Enter 1212 for Exit\n");
-}
 
 
-
-int checkline(int playfield[9][9])
-{
-    for(int i = 0 ; i < 9 ; i++)
-    {
-      for(int j = 0 ; j < 9 ; j++)
-        {
-      if ( playfield[i][j] != 0)
-        {
-        for(int k = 0 ; k < 9 ; k++)
-        {
-          if (k == j)
-          {
-            k++;
-          }
-          if (playfield[i][j] == playfield[i][k])
-          {
-            printf("wrong!!!\n");
-            return 1;
-          }
-        }
-       }
-      }
-    }
-    return 0;
-}
 
 
 int main (int argc, char * argv[])
