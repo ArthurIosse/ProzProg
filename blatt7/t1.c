@@ -8,7 +8,7 @@
 
 
 
-const int field[9][9] = {{4,1,0,0,6,5,0,0,7},
+const int field[9][9] = { {4,1,0,0,6,5,0,0,7},
                           {0,0,6,0,0,7,4,8,0},
                           {2,0,7,4,9,0,0,0,6},
 
@@ -90,75 +90,86 @@ void printinstructions()
 
 int checkline(int playfield[9][9])
 {
-    // //line check
-    // for(int i = 0 ; i < 9 ; i++)
-    // {
-    //   for(int j = 0 ; j < 9 ; j++)
-    //     {
-    //   if ( playfield[i][j] != 0)
-    //     {
-    //     for(int k = 0 ; k < 9 ; k++)
-    //     {
-    //       if (k == j)
-    //       {
-    //         k++;
-    //       }
-    //       if (playfield[i][j] == playfield[i][k])
-    //       {
-    //         printf("wrong!!!\n");
-    //         return 1;
-    //       }
-    //     }
-    //    }
-    //   }
-    // }
-    // //column check
-    // for(int i = 0 ; i < 9 ; i++)
-    // {
-    //   for(int j = 0 ; j < 9 ; j++)
-    //     {
-    //   if ( playfield[j][i] != 0)
-    //     {
-    //     for(int k = 0 ; k < 9 ; k++)
-    //     {
-    //       if (k == i)
-    //       {
-    //         k++;
-    //       }
-    //       if (playfield[j][i] == playfield[k][i])
-    //       {
-    //         printf("wrong!!!\n");
-    //         return 1;
-    //       }
-    //     }
-    //    }
-    //   }
-    // }
-    // return 0;
+    //line check
+    for(int i = 0 ; i < 9 ; i++)
+    {
+      for(int j = 0 ; j < 9 ; j++)
+        {
+      if ( playfield[i][j] != 0)
+        {
+        for(int k = 0 ; k < 9 ; k++)
+        {
+          if (k == j)
+          {
+            k++;
+          }
+          if (playfield[i][j] == playfield[i][k])
+          {
+            printf("wrong line!!!\n");
+            return 1;
+          }
+        }
+       }
+      }
+    }
+    //column check
+    for(int i = 0 ; i < 9 ; i++)
+    {
+      for(int j = 0 ; j < 9 ; j++)
+        {
+      if ( playfield[j][i] != 0)
+        {
+        for(int k = 0 ; k < 9 ; k++)
+        {
+          if (k == j)
+          {
+            k++;
+          }
+          if (playfield[j][i] == playfield[k][i])
+          {
+            printf("wrong column!!!\n");
+            return 1;
+          }
+        }
+       }
+      }
+    }
 
     //box check
-    for (int i = 0 ; i < 3 ; i++ )
+    int count1 = 0;
+    int count2 = 0;
+    int i1;
+    int j1;
+    int k1;
+    int p1;
+    while (count1 < 9){
+      while(count2 < 9){
+    for (i1 = count2 ; i1 < count2+3 ; i1++ )
     {
-      for (int j = 0 ;j < 3 ; j++ )
+      for (j1 = count1 ;j1 < count1 + 3 ; j1++ )
       {
-        if ( playfield[i][j] != 0)
-        for (int k = 0 ; k < 3 ; k++ )
+        if ( playfield[i1][j1] != 0)
+        for (k1 = count2 ; k1 < count2+3 ; k1++ )
         {
-
-          for (int p = 0 ; p < 3 ; p++ )
+          for (p1 = count1 ; p1 < count1+3 ; p1++ )
           {
-            if(k == i && p == j){ p++ ;}
-            if (playfield[i][j] == playfield[k][p])
+            if(k1 == i1 && p1 == j1){ p1++ ;}
+            if (playfield[i1][j1] == playfield[k1][p1])
             {
-              printf("wrong!!!\n");
+              printf("wrong box!!!\n");
               return 1;
           }
 
         }
       }
     }
+  }
+  count2 += 3;
+  }
+  count2 = 0;
+  count1 += 3;
 }
-return 0;
+ return 0;
 
 }
 
