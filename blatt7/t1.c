@@ -84,11 +84,13 @@ void printinstructions()
   printf("                                  ||->Spalte\n");
   printf("                                  |->Zeile\n");
   printf("Enter 1212 for Exit\n");
+  printf("Enter 1111 for auto solve\n");
+
 }
 
 
 
-int checkline(int playfield[9][9])
+int checkboard(int playfield[9][9])
 {
     //line check
     for(int i = 0 ; i < 9 ; i++)
@@ -174,6 +176,19 @@ int checkline(int playfield[9][9])
 }
 
 
+int autosolve(int playfield[9][9])
+{
+    if(1){
+
+      return 1;
+    }else
+    {
+
+      return autosolve(playfield);
+ }
+}
+
+
 int main (int argc, char * argv[])
 {
   int wrong = 0;
@@ -183,8 +198,17 @@ int main (int argc, char * argv[])
    int x = 0;
 
 
+
+
   while (x != 1212){
-  scanf("%d",&x);
+    scanf("%d",&x);
+    if(x == 1111)
+    {
+      printf("solving\n");
+      
+      break;
+    }
+
   if((x >= 100 && x <= 999) || x == 1212)
   {
   int z = x / 100;
@@ -192,19 +216,14 @@ int main (int argc, char * argv[])
   int n = x % 10;
 
   playfield[z-1][s-1] = n ;
-  wrong = checkline(playfield);
+  wrong = checkboard(playfield);
   printfield(z,s,n,wrong);
   printinstructions();
-
-
-
-
   }
   else
   {
     printf("Wrong number, try again please\n");
   }
 }
-
   return 0;
 }
