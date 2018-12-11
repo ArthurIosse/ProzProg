@@ -1,5 +1,6 @@
 // #include <stdio.h>
 // #include <stdlib.h>
+#include <math.h>
 #include "libBMP.h"
 
 #define x_MIN -2.0
@@ -8,10 +9,11 @@
 #define y_MAX  1.0
 
 
-#define BMP_B 80
-#define BMP_H 80
+#define BMP_B 600
+#define BMP_H 400
 
-void toMath(int X, int Y, double* x, double* y) {
+void toMath(int X, int Y, double* x, double* y)
+{
 //wenn funkwert liegt auserhalb BMP
   if ((X < 0) || (X > BMP_B) || (Y < 0) || (Y > BMP_H)) {
     printf("Fehler: 0 <= %d <= %d\n", X, BMP_B);
@@ -22,23 +24,27 @@ void toMath(int X, int Y, double* x, double* y) {
   }
   *x = x_MIN + ((double) X * (x_MAX - x_MIN)) / BMP_B;
   *y = y_MIN + ((double) (BMP_H - Y) * (y_MAX - y_MIN)) / BMP_H;
-  printf("x = %lf ,\ny = %lf .\n",*x,*y);
+  //printf("x = %lf ,\ny = %lf .\n",*x,*y);
 }
+
+
+
+
 
 //x Realteil
 //y Imaginaerteil
 //nZx next Realteil
 //nZy next Imaginaerteil
-
-int mandelbrot(double x, double y, double nZx, double nZy, int n_max)
+int mandelbrot(double x, double y, double nZx, double nZy,int n, int n_max,double edge)
 {
-int n = 0;
-  if(n<=n_max || ((x+y)*(x+y)) >=2 ){
-    double zr_next = (nZx*nZx -nZy*nZy + x);
-    double zi_next = (2*nZx*nZy+y);
-    } else
-    {
 
+  if(n<=n_max && ((nZx * nZx + nZy * nZy) < edge)){
+    double zr_next = (nZx*nZx -nZy*nZy) + x;
+    double zi_next = (2*nZx*nZy)+y;
+    if ((zr_next == nZx) && (zi_next == nZy)) {
+      return n_max;
+    }
+    n = mandelbrot(x,y,zr_next,zi_next,n+1,n_max,edge);
     }
   return n;
 }
@@ -46,21 +52,41 @@ int n = 0;
 
 int main(int argc,char* argv[])
 {
+  //variables
 uint32_t * data = (uint32_t*)malloc(BMP_B*BMP_H*sizeof(uint32_t));
-  //white background
+int n_max = 400;
+double edge = 4.0;
+
+
     for (int i = 0 ; i < BMP_H ; i++)
     {
       for(int j = 0 ; j < BMP_B ; j++)
       {
-        int n_max = 400;
-
         double x;
         double y;
         toMath(j,i,&x,&y);
-        data[i * BMP_B + j] = COLOR_WHITE;
+
+        int n = mandelbrot(x,y,0.0,0.0,0,n_max,edge);
+        printf("%d \n", n);
+        uint32_t color = COLOR_BLACK;
+        // if (n < 10) {
+        //   color = COLOR_RED;
+        // }
+        //  else if (n < 10) {
+        //   color = COLOR_GREEN;
+        // } else if (n < 20) {
+        //   color = COLOR_BLUE;
+        // } else if (n < n_max) {
+        //   color = COLOR_WHITE;
+        // }
+
+        if( n<401 ){color = COLOR_WHITE;}
+
+
+        data[i * BMP_B + j] = color;
+
       }
     }
-
 
 
 
