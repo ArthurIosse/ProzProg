@@ -84,11 +84,9 @@ void printinstructions()
   printf("                                  ||->Spalte\n");
   printf("                                  |->Zeile\n");
   printf("Enter 1212 for Exit\n");
-  printf("Enter 1111 for auto solve\n");
+  printf("Enter 21 for auto solve\n");
 
 }
-
-
 
 int checkboard(int playfield[9][9])
 {
@@ -175,18 +173,39 @@ int checkboard(int playfield[9][9])
 
 }
 
-
 int autosolve(int playfield[9][9])
 {
-    if(1){
+  int z = -1;
+  int s = -1;
+    for(int i = 0 ; ((i< 9) && (z == -1)) ; i++)
+      {
+        for(int j = 0 ; ((j<9) && (s == -1)); j++)
+        {
+            if (playfield[i][j] == 0 )
+            {
+              z = i;
+              s = j;
+            }
+        }
+      }
 
-      return 1;
-    }else
-    {
+      if ((z == -1) && (s == -1)) {
+        if (checkboard(playfield) == 0){return 1;}
+        else{return 0;}
+      }
 
-      return autosolve(playfield);
- }
+      for(int k = 1 ; k<=9 ; k++)
+      {
+        playfield[z][s] = k;
+        if (checkboard(playfield)==0 && autosolve(playfield) == 1)
+        {
+          return 1;
+        }
+      }
+      playfield[z][s] = 0;
+      return 0;
 }
+
 
 
 int main (int argc, char * argv[])
@@ -202,10 +221,21 @@ int main (int argc, char * argv[])
 
   while (x != 1212){
     scanf("%d",&x);
-    if(x == 1111)
+
+
+    if(x == 21)
     {
       printf("solving\n");
-      
+      autosolve(playfield);
+      if(autosolve(playfield)==1)
+      {
+      printf("solved\n");
+      printfield(0,0,0,0);
+    }else
+    {
+      printf("not possible\n");
+    }
+
       break;
     }
 
