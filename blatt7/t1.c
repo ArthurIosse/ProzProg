@@ -81,8 +81,8 @@ void printinstructions()
   printf("\n\nEnter a 3 digit Number Sir, where XXX\n");
   printf("                                  ^^^\n");
   printf("                                  |||->Nummer\n");
-  printf("                                  ||->Spalte\n");
-  printf("                                  |->Zeile\n");
+  printf("                                  ||->Column\n");
+  printf("                                  |->Row\n");
   printf("Enter 1212 for Exit\n");
   printf("Enter 21 for auto solve\n");
 
