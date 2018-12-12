@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 // Definiere einfache BMP Farben
 #define COLOR_BLACK 0x00000000
 #define COLOR_RED   0x00FF0000
