@@ -26,6 +26,7 @@ void print(student * data)
 int main(int argc, char * argv[])
 {
   student studenten[3];
+  student bulbulim[3] = {{"anna","muster","am berg",4,22222},{"buba","huba","kaser",2,44444},{"perda","4ello","deni",8,66666}};
 
 //erste Student
   student * stud = &studenten[0];
@@ -56,6 +57,11 @@ int main(int argc, char * argv[])
       print(&studenten[i]);
      }
   printf("\n");
+
+  for(int i = 0 ; i<3 ; i++)
+  {
+    print(&bulbulim[i]);
+  }
 
   //1ste und 3te Studenten vertauschen
   student  temp = studenten[0];
