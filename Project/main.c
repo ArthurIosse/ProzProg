@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include <locale.h>
-#include <time.h>
-#include <ncurses.h>
+#include <locale.h>   //setlocale(); ASCII signs
+#include <time.h>     // srand(time(0));
+#include <ncurses.h>  //create window
+#include <unistd.h>   //usleep(); warning
 
 
 #define H 30
@@ -18,6 +19,7 @@ int brickl[W];
 
 void setup()
 {
+
   initscr();
   //raw();
   clear();
@@ -51,7 +53,8 @@ void draw()
         }
     }
   }
-  mvprintw(H+3,10,"Score: %d",score);
+
+  mvprintw(H+3,10,"Score: %d\n\nPress 'q' to quit.",score);
   refresh();
 
 }
@@ -79,40 +82,24 @@ void input()
 void logic()
 {
 
-
   switch(dir)
    {
        //case UP: y--; break;
-       case LEFT: x--; break;
+       case LEFT: if(x==1){break;} x--; break;
       // case DOWN: y++; break;
-       case RIGHT: x++; break;
+       case RIGHT: if(x==W){break;} x++; break;
        case JUMP:  for(int i = 0 ; i < 18 ; i++)
                       {
-                        if(i < 9)
-                        {
+                        if(i < 9){
                           y--;
-                          usleep(60000);
+                          usleep(40000);
                           draw();
-                          //input();
-                          //logic();
-                        }else
-                        {
+                        }else{
                         y++;
-                        usleep(60000);
+                        usleep(40000);
                         draw();
-                        //input();
-                        //logic();
                         }
                       }
-
-                  // y--;usleep(100000);draw();y--;usleep(100000);draw();y--;usleep(100000);draw();
-                  // y--;usleep(100000);draw();y--;usleep(100000);draw();y--;usleep(100000);draw();
-                  // usleep(150000);
-                  // y++;usleep(100000);draw();y++;usleep(100000);draw();y++;usleep(100000);draw();
-                  // y++;usleep(100000);draw();y++;usleep(100000);draw();y++;usleep(100000);draw();
-                  // usleep(150000);break;
-
-
        default: break;
    }
    dir = STOP;
@@ -125,7 +112,6 @@ int main(int argc,char * argv[])
 {
   //  srand(time(0));   // brickl = rand()%W;
     setlocale(LC_ALL, "");
-
 
     setup();
     while (!gameover)
