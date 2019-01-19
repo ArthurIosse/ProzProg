@@ -25,22 +25,22 @@ void print(student * data)
     printf("%d.\n",data->kurse);
 }
 
-student *reverse(struct student *list) {
-  student *tmp = NULL;
-  while (list != NULL) {
-    list->prev = list->next;
-    list->next = tmp;
-    tmp = list;
-    list = list->prev;
+student *reverse(struct student *data) {
+  student *temp = NULL;
+  while (data != NULL) {
+    data->prev = data->next;
+    data->next = temp;
+    temp = data;
+    data = data->prev;
   }
-  return tmp;
+  return temp;
 }
 
 
 int main(int argc, char * argv[])
 {
-    student * studenten = NULL;
-    student * stud = NULL;
+    student * studenten = NULL; //head
+    student * stud = NULL;      //iterator
     studenten = (student*)malloc(sizeof(student));
     //student bulbulim[3] = {{"anna","muster","am berg",4,22222},{"buba","huba","kaser",2,44444},{"perda","4ello","deni",8,66666}};
 
