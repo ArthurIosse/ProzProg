@@ -7,6 +7,7 @@
 
 #define H 30
 #define W 30
+#define BL 8
 
 
 
@@ -14,8 +15,25 @@ bool gameover = false;
 typedef enum eDirection { STOP=0, UP, DOWN, LEFT, RIGHT, JUMP} eDirection;
 eDirection dir;
 int x, y, brickx ,bricky , score;
+bool flor = true;
 
-int brickl[6];
+
+bool checkflor()
+{
+  for (int i = 0 ; i<BL ; i++)
+  {
+    if((x==brickx+i) && (y == bricky-1)){
+      return 1;
+  }
+  }
+  for (int i = 0 ; i<W ; i++)
+  {
+    if(y == H){
+      return 1;
+    }
+  }
+  return 0;
+}
 
 void setup()
 {
@@ -57,7 +75,7 @@ void draw()
         }
         if(i == bricky && j == brickx)
         {
-          for (int b = 0 ; b<8 ; b++)
+          for (int b = 0 ; b<BL ; b++)
              mvprintw(i,j+b,"█");
         }
     }
@@ -91,37 +109,52 @@ void input()
 void logic()
 {
 
+
   switch(dir)
    {
-       //case UP: y--; break;
-       case LEFT: if(x==1){break;} x--; break;
-      // case DOWN: y++; break;
-       case RIGHT: if(x==W){break;} x++; break;
-       case JUMP:  for(int i = 0 ; i < 18 ; i++)
+       case LEFT: if(x==1){break;} x--;dir=STOP; break;
+
+       case RIGHT: if(x==W){break;} x++;dir=STOP; break;
+
+       case JUMP:     if(!flor)break;
+                      for(int i = 0 ; i < 18 ; i++)
                       {
                         if(i < 9){
                           y--;
-                          //usleep(40000);
                           input();
-                          if(dir == RIGHT) x++;
-                          if(dir == LEFT) x--;
+                          if(dir == RIGHT){
+                            if(x==W){x--;}
+                             x++;
+                           }
+                          if(dir == LEFT){
+                          if(x==1){x++;}
+                           x--;
+                         }
                           dir = STOP;
                           draw();
-
                         }else{
+                          if(checkflor())break;
+
                         y++;
-                        //usleep(40000);
                         input();
-                        if(dir == RIGHT) x++;
-                        if(dir == LEFT) x--;
+                        if(dir == RIGHT){
+                          if(x==W){x--;}
+                           x++;
+                         }
+                        if(dir == LEFT){
+                        if(x==1){x++;}
+                         x--;
+                       }
                         dir = STOP;
                         draw();
-
                         }
                       }
        default: break;
    }
-   dir = STOP;
+
+   if(checkflor()){
+   dir = STOP; flor = true;}
+   else {y++;flor = false;}
 }
 
 
