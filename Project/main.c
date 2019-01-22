@@ -15,7 +15,7 @@ typedef enum eDirection { STOP=0, UP, DOWN, LEFT, RIGHT, JUMP} eDirection;
 eDirection dir;
 int x, y, brickx ,bricky , score;
 
-int brickl[W];
+int brickl[6];
 
 void setup()
 {
@@ -31,6 +31,10 @@ void setup()
   score = 0;
   x = W/2;
   y = H;
+
+  brickx = 5;
+  bricky = 24;
+
 
 
 
@@ -50,6 +54,11 @@ void draw()
         else if (i == y && j == x)
         {
             mvprintw(i, j, "¶");
+        }
+        if(i == bricky && j == brickx)
+        {
+          for (int b = 0 ; b<8 ; b++)
+             mvprintw(i,j+b,"█");
         }
     }
   }
@@ -92,12 +101,22 @@ void logic()
                       {
                         if(i < 9){
                           y--;
-                          usleep(40000);
+                          //usleep(40000);
+                          input();
+                          if(dir == RIGHT) x++;
+                          if(dir == LEFT) x--;
+                          dir = STOP;
                           draw();
+
                         }else{
                         y++;
-                        usleep(40000);
+                        //usleep(40000);
+                        input();
+                        if(dir == RIGHT) x++;
+                        if(dir == LEFT) x--;
+                        dir = STOP;
                         draw();
+
                         }
                       }
        default: break;

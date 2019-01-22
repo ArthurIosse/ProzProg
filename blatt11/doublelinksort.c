@@ -36,26 +36,34 @@ student *reverse(struct student *data) {
   return temp;
 }
 
+
 student *sort(struct student *head)
 {
-  student *temp = NULL;
-  student *next;
-  for(temp = head ; temp != NULL ; temp = temp->next)
-  {
-    for(next = temp; next != NULL ; next = next->next)
-    {
-      if(next!=temp && strcmp(temp->nachname,next->nachname) > 0)
-      {
-        //swap
-        printf("Something happend\n");
-        temp->prev = next;
-        temp->next = next->next;
-        next->next = temp;
-        next->prev = temp->prev;
+  student *temp = head;
+  student *next = head->next;
+  student *pos;
 
+  while(temp!=NULL)
+  {
+
+    while(next!=NULL)
+    {
+      if( (temp!=next) && (strcmp(temp->nachname,next->nachname)>0) )
+      {
+        printf("Something\n");
+        pos = temp;
+        temp->next = next->next;
+        temp->prev = next;
+        next->next = pos;
+        next->prev = pos->prev;
+      }
+      if(next->prev == NULL){
         head = next;
       }
+      next=next->next;
     }
+    temp = temp->next;
+    next = temp;
   }
   return head;
 }
@@ -70,7 +78,7 @@ int main(int argc, char * argv[])
     //erste Student
     stud = studenten;
     strcpy(stud->vorname, "Igor");
-    strcpy(stud->nachname, "Antonov");
+    strcpy(stud->nachname, "1");
     strcpy(stud->adresse, "Holstenhofweg 49");
     stud->kurse = 4;
     stud->matrikel = 22222;
@@ -81,7 +89,7 @@ int main(int argc, char * argv[])
     //zweite Student
     stud = stud->next;
     strcpy(stud->vorname, "Hans");
-    strcpy(stud->nachname, "Peter");
+    strcpy(stud->nachname, "3");
     strcpy(stud->adresse, "Kasernenstrasse 12");
     stud->kurse = 2;
     stud->matrikel = 44444;
@@ -91,7 +99,7 @@ int main(int argc, char * argv[])
     //dritte Student
     stud = stud->next;
     strcpy(stud->vorname, "Lisa");
-    strcpy(stud->nachname, "Lustig");
+    strcpy(stud->nachname, "2");
     strcpy(stud->adresse, "Denickestrasse 15");
     stud->kurse = 8;
     stud->matrikel = 66666;
@@ -101,7 +109,7 @@ int main(int argc, char * argv[])
     //vierte Student
     stud = stud->next;
     strcpy(stud->vorname, "Ivan");
-    strcpy(stud->nachname, "Ivanov");
+    strcpy(stud->nachname, "5");
     strcpy(stud->adresse, "Monetastr. 2");
     stud->kurse = 1;
     stud->matrikel = 77777;
@@ -111,7 +119,7 @@ int main(int argc, char * argv[])
     //fuenfte Student
     stud = stud->next;
     strcpy(stud->vorname, "Pedro");
-    strcpy(stud->nachname, "Podolski");
+    strcpy(stud->nachname, "6");
     strcpy(stud->adresse, "Papphausweg 1");
     stud->kurse = 3;
     stud->matrikel = 88888;
@@ -121,8 +129,10 @@ int main(int argc, char * argv[])
     //sechste student
     stud = stud->next;
     strcpy(stud->vorname, "Anna");
-    strcpy(stud->nachname, "Musterfrau");
+    strcpy(stud->nachname, "4");
     strcpy(stud->adresse, "Am Schwarzenberg-Campus 3");
+    stud->kurse = 7;
+    stud->matrikel = 99999;
     stud->next = NULL;
 
     //Ausgabe in schleife

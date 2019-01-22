@@ -6,24 +6,17 @@
 
 int main(int argc, char * argv[])
 {
-int a ;
-int b ;
-int c ;
+int a = 1;
+int b = 2;
+int c = 3;
 
-printf("enter a in : aX^2  + bX  +  c ");
-scanf("%d",&a);
-printf("enter b in : aX^2  + bX  +  c ");
-scanf("%d",&b);
-printf("enter c in : aX^2  + bX  +  c ");
-scanf("%d",&c);
+if (a>2)
+printf("a>2\n");
+printf("second printf\n");
 
-double det = sqrt((b*b)-(4*a*c));
-
-double null1 = ((-b)+det)/(2*a);
-double null2 = ((-b)-det)/(2*a);
+while(b>a)
 
 
-printf("x1 = %lf, x2 = %lf \n",null1,null2);
 
   return 0;
 }
