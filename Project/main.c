@@ -2,33 +2,64 @@
 #include <locale.h>   //setlocale(); ASCII signs
 #include <time.h>     // srand(time(0));
 #include <ncurses.h>  //create window
-#include <unistd.h>   //usleep(); warning
-
 
 #define H 30
 #define W 30
-#define BL 8
+#define BL 5
 
 
 
 bool gameover = false;
 typedef enum eDirection { STOP=0, UP, DOWN, LEFT, RIGHT, JUMP} eDirection;
 eDirection dir;
-int x, y, brickx ,bricky , score;
+int x, y , score = 0;
 bool flor = true;
+//int * bricks = (int*)malloc(2*4*sizeof(int));
+int bricks[4][2] = {{5,24},{10,16},{1,10},{13,5}};
 
+int spikes[5][3];
+
+
+int checkspikes()
+{
+  for(int v = 0; v < 5; v++) {
+    for (int i = 0 ; i<BL ; i++)
+    {
+      if((x == spikes[v][0]) && (y == spikes[v][1]-1)){
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+// void newlevel()
+// {
+//   //free(bricks);
+//   for (int i = 0 ; i < 4 ;i++)
+//   {
+//     for(int j = 0 ; j < 2 ;j++)
+//     {
+//       briks(i*)
+//     }
+//   }
+//   bricks = {{15,24},{20,18},{21,12},{16,7}};
+// }
 
 bool checkflor()
 {
-  for (int i = 0 ; i<BL ; i++)
-  {
-    if((x==brickx+i) && (y == bricky-1)){
-      return 1;
+  for(int v = 0; v < 5; v++) {
+    for (int i = 0 ; i<BL ; i++)
+    {
+      if((x == bricks[v][0]+i) && (y == bricks[v][1]-1)){
+        // score++;
+        return 1;
+      }
+    }
   }
-  }
-  for (int i = 0 ; i<W ; i++)
+  for (int i = 0 ; i < W ; i++)
   {
     if(y == H){
+      // score = 0;
       return 1;
     }
   }
@@ -50,9 +81,13 @@ void setup()
   x = W/2;
   y = H;
 
-  brickx = 5;
-  bricky = 24;
-
+  for (int i = 0 ; i < 4 ; i++)
+  {
+    for (int j = 0 ; j < 2 ; j ++)
+    {
+      spikes[i][j] = bricks[i][j];
+    }
+  }
 
 
 
@@ -73,11 +108,19 @@ void draw()
         {
             mvprintw(i, j, "¶");
         }
-        if(i == bricky && j == brickx)
-        {
-          for (int b = 0 ; b<BL ; b++)
-             mvprintw(i,j+b,"█");
+        for(int v = 0; v < 5; v++) {
+          if(i == bricks[v][1] && j == bricks[v][0])
+          {
+            for (int b = 0 ; b<BL ; b++)
+               mvprintw(i,j+b,"█");
+          }
         }
+        for(int v = 0; v < 5; v++) {
+          if(i == spikes[v][1] && j == spikes[v][0])
+            {
+               mvprintw(i-1,j,"v");
+             }
+           }
     }
   }
 
@@ -152,6 +195,9 @@ void logic()
        default: break;
    }
 
+   if(checkspikes())
+   gameover = true;
+
    if(checkflor()){
    dir = STOP; flor = true;}
    else {y++;flor = false;}
@@ -162,7 +208,7 @@ void logic()
 
 int main(int argc,char * argv[])
 {
-  //  srand(time(0));   // brickl = rand()%W;
+    // srand(time(0));   // brickl = rand()%W;
     setlocale(LC_ALL, "");
 
     setup();
@@ -171,6 +217,7 @@ int main(int argc,char * argv[])
       draw();
       input();
       logic();
+      //if(y==0)newlevel();
     }
 
 
