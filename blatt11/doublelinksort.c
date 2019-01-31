@@ -51,19 +51,22 @@ student *sort(struct student *head)
       if( (temp!=next) && (strcmp(temp->nachname,next->nachname)>0) )
       {
         printf("Something\n");
-        pos = temp;
+        pos = temp->prev;
         temp->next = next->next;
         temp->prev = next;
-        next->next = pos;
-        next->prev = pos->prev;
+        next->next = temp;
+        next->prev = pos;
+        next->prev->next = next;
+        temp->next->prev = temp;
+
       }
       if(next->prev == NULL){
         head = next;
       }
-      next=next->next;
+      next=temp->next;
     }
-    temp = temp->next;
-    next = temp;
+    temp = head;
+    next = temp->next;
   }
   return head;
 }

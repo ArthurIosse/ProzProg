@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <locale.h>   //setlocale(); ASCII signs
 #include <time.h>     // srand(time(0));
 #include <ncurses.h>  //create window
@@ -12,12 +13,26 @@
 bool gameover = false;
 typedef enum eDirection { STOP=0, UP, DOWN, LEFT, RIGHT, JUMP} eDirection;
 eDirection dir;
-int x, y , score = 0;
+int x, y , score;
+int yalt = H -1;
 bool flor = true;
 //int * bricks = (int*)malloc(2*4*sizeof(int));
-int bricks[4][2] = {{5,24},{10,16},{1,10},{13,5}};
-
+int bricks[4][2] = {{5,24},{10,16},{1,10},{11,5}};
 int spikes[5][3];
+
+
+void setspikes()
+{
+  for (int i = 0 ; i < 4 ; i++)
+  {
+    for (int j = 0 ; j < 2 ; j ++)
+    {
+      spikes[i][j] = bricks[i][j];
+    }
+  }
+}
+
+
 
 
 int checkspikes()
@@ -32,18 +47,23 @@ int checkspikes()
   }
   return 0;
 }
-// void newlevel()
-// {
-//   //free(bricks);
-//   for (int i = 0 ; i < 4 ;i++)
-//   {
-//     for(int j = 0 ; j < 2 ;j++)
-//     {
-//       briks(i*)
-//     }
-//   }
-//   bricks = {{15,24},{20,18},{21,12},{16,7}};
-// }
+
+
+void newLevel() {
+  int tmp1 = bricks[3][1];
+  bricks[3][1] = bricks[0][1];
+  bricks[0][1] = tmp1;
+  y = bricks[3][1]-1;
+  x = bricks[3][0]+2;
+  yalt = bricks[3][1]-1;
+  for(int t; t < 3; t++) {
+    if(bricks[t][0]+7 > W) {
+      bricks[t][0] = 0;
+    }
+    bricks[t][0] = bricks[t][0]+2;
+  }
+}
+
 
 bool checkflor()
 {
@@ -51,7 +71,6 @@ bool checkflor()
     for (int i = 0 ; i<BL ; i++)
     {
       if((x == bricks[v][0]+i) && (y == bricks[v][1]-1)){
-        // score++;
         return 1;
       }
     }
@@ -59,7 +78,6 @@ bool checkflor()
   for (int i = 0 ; i < W ; i++)
   {
     if(y == H){
-      // score = 0;
       return 1;
     }
   }
@@ -70,7 +88,6 @@ void setup()
 {
 
   initscr();
-  //raw();
   clear();
   noecho();
   cbreak();
@@ -80,16 +97,6 @@ void setup()
   score = 0;
   x = W/2;
   y = H;
-
-  for (int i = 0 ; i < 4 ; i++)
-  {
-    for (int j = 0 ; j < 2 ; j ++)
-    {
-      spikes[i][j] = bricks[i][j];
-    }
-  }
-
-
 
 }
 
@@ -118,7 +125,9 @@ void draw()
         for(int v = 0; v < 5; v++) {
           if(i == spikes[v][1] && j == spikes[v][0])
             {
+              printf("\x1B[31m");
                mvprintw(i-1,j,"v");
+               printf("\x1B[0m");
              }
            }
     }
@@ -201,6 +210,14 @@ void logic()
    if(checkflor()){
    dir = STOP; flor = true;}
    else {y++;flor = false;}
+
+   if(checkflor() && y < yalt)
+   {
+     yalt = y;
+     score ++;
+   }
+
+
 }
 
 
@@ -208,16 +225,18 @@ void logic()
 
 int main(int argc,char * argv[])
 {
-    // srand(time(0));   // brickl = rand()%W;
+    srand(time(0));   // brickl = rand()%W;
     setlocale(LC_ALL, "");
 
     setup();
     while (!gameover)
     {
+      setspikes();
       draw();
       input();
       logic();
-      //if(y==0)newlevel();
+      if(y < 8 && checkflor())
+        newLevel();
     }
 
 
